@@ -1,0 +1,20 @@
+.MuiPaper-elevation1{
+    box-shadow: none !important;
+}
+.MuiPaper-root{
+    background: #fafafa !important;
+}
+.MuiTabs-scroller > span{
+    width: 120px;
+}
+@media (min-width: 600px){
+.MuiTab-root {
+    min-width: 120px !important;
+}
+.MuiContainer-maxWidthSm {
+    max-width: 100% !important; 
+}
+}
+.MuiSelect-select:focus{
+    background-color: #fff !important;
+}
