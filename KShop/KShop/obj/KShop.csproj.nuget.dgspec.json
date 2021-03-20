@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\OneDrive\\Desktop\\Project\\Kshop\\KShop\\KShop\\KShop.csproj": {}
+    "D:\\OneDrive\\Desktop\\Project\\KshopCode\\KShop\\KShop\\KShop.csproj": {}
   },
   "projects": {
-    "D:\\OneDrive\\Desktop\\Project\\Kshop\\KShop\\KShop\\KShop.csproj": {
+    "D:\\OneDrive\\Desktop\\Project\\KshopCode\\KShop\\KShop\\KShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\OneDrive\\Desktop\\Project\\Kshop\\KShop\\KShop\\KShop.csproj",
+        "projectUniqueName": "D:\\OneDrive\\Desktop\\Project\\KshopCode\\KShop\\KShop\\KShop.csproj",
         "projectName": "KShop",
-        "projectPath": "D:\\OneDrive\\Desktop\\Project\\Kshop\\KShop\\KShop\\KShop.csproj",
+        "projectPath": "D:\\OneDrive\\Desktop\\Project\\KshopCode\\KShop\\KShop\\KShop.csproj",
         "packagesPath": "C:\\Users\\Win 10\\.nuget\\packages\\",
-        "outputPath": "D:\\OneDrive\\Desktop\\Project\\Kshop\\KShop\\KShop\\obj\\",
+        "outputPath": "D:\\OneDrive\\Desktop\\Project\\KshopCode\\KShop\\KShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Win 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
