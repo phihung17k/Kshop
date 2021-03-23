@@ -1,4 +1,6 @@
 ﻿
+using KShop.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -20,15 +22,16 @@ namespace KShop.Controllers {
 
         // POST api/<LoginController>
         [HttpPost]
-        public string Post([FromBody] string[] value) {
-            bool checkLogin = false;
-            string username = value[0];
-            string password = value[1];
-
+        public string GetAccountForLogin([FromBody] string[] value) {
+            bool resultLogin = false ;
+            //string username = value[0];
+            //string password = value[1];
+            string username = "admin";
+            string password = "123456";
             connection.Open();
 
             #region working with procedure
-            SqlCommand command = new SqlCommand("sp_login_Account", connection);
+            SqlCommand command = new SqlCommand("sp_check_Account", connection);
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.Add("@username", SqlDbType.NVarChar);
@@ -39,12 +42,42 @@ namespace KShop.Controllers {
 
             SqlDataReader reader = command.ExecuteReader();
             if(reader.Read()) {
-                checkLogin = true;
+                resultLogin = true;
             }
+            
             connection.Close();
-            return JsonConvert.SerializeObject(checkLogin.ToString());
+            if(resultLogin) {
+                
+                Account user = GetAccount(username);
+                string currentUser = JsonConvert.SerializeObject(user);
+                HttpContext.Session.SetString("user", currentUser);
+                return currentUser;
+            }
+            return "";
         }
 
+        Account GetAccount(string username) {
+            Account result = null;
+            connection.Open();
+            #region working with procedure
+            SqlCommand command = new SqlCommand("sp_get_Account", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@username", SqlDbType.NVarChar);
+            command.Parameters["@username"].Value = username;
+            #endregion
+
+            SqlDataReader reader = command.ExecuteReader();
+            if(reader.Read()) {
+                string fullname = reader.GetString("FullName");
+                string address = reader.GetString("Address");
+                int age = reader.GetInt32("Age");
+                string gender = reader.GetString("gender");
+                string role = reader.GetString("RoleName");
+                result = new Account(fullname, address, age, gender, role);
+            }
+            connection.Close();
+            return result;
+        }
         
     }
 }

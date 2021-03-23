@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <OutputType>Exe</OutputType>
+	  <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -10,11 +11,25 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+		<PackageReference Include="Firebase.Auth" Version="1.0.0" />
+		<PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
+		<PackageReference Include="FireSharp.Serialization.JsonNet" Version="1.1.0" />
+		<PackageReference Include="MediaTypeMap" Version="2.1.0" />
+		<PackageReference Include="Microsoft.AspNet.WebApi" Version="5.2.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\index.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="App_Data\" />
+	  <Folder Include="wwwroot\images\" />
 	</ItemGroup>
 
 </Project>

@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using Newtonsoft.Json;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace KShop.Controllers
 {
@@ -95,10 +97,29 @@ namespace KShop.Controllers
             return listProduct;
         }
 
-        [HttpPost("addProduct")]
-        public string AddProduct([FromBody] Product product) {
+        private Object ByteArrayToObject(byte[] arrBytes) {
+            MemoryStream memStream = new MemoryStream();
+            BinaryFormatter binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            Object obj = (Object)binForm.Deserialize(memStream);
+
+            return obj;
+        }
+
+        [HttpGet("addProduct")]
+        public ActionResult AddProduct() {
             bool addSuccess = false;
             try {
+                byte[] form = new byte[10];
+                HttpContext.Session.TryGetValue("formData", out form);
+                FormCreateProduct formData = (FormCreateProduct)ByteArrayToObject(form);
+                string a = formData.ProductName;
+                string b = formData.Quantity;
+                string c = formData.Price;
+                string d = formData.ProductName;
+
+                string imageLocation = Request.Headers["imageLocation"];
                 connection.Open();
 
                 #region
@@ -110,11 +131,11 @@ namespace KShop.Controllers
                 command.Parameters.Add("@categoryId", SqlDbType.NVarChar);
                 command.Parameters.Add("@image", SqlDbType.NVarChar);
 
-                command.Parameters["@productName"].Value = product.ProductName;
-                command.Parameters["@quantity"].Value = product.Quantity;
-                command.Parameters["@price"].Value = product.Price;
-                command.Parameters["@categoryId"].Value = product.CategoryId;
-                command.Parameters["@image"].Value = product.Image;
+                command.Parameters["@productName"].Value = formData.ProductName;
+                command.Parameters["@quantity"].Value = formData.Quantity;
+                command.Parameters["@price"].Value = formData.Price;
+                command.Parameters["@categoryId"].Value = formData.CategoryId;
+                command.Parameters["@image"].Value = imageLocation;
 
                 int row = command.ExecuteNonQuery();
                 if(row > 0) {
@@ -123,10 +144,10 @@ namespace KShop.Controllers
                 #endregion
 
                 connection.Close();
-            } catch(Exception) {
-                throw;
+            } catch(Exception ex) {
+                return BadRequest(error: ex);
             }
-            return JsonConvert.SerializeObject(addSuccess.ToString());
+            return Ok(JsonConvert.SerializeObject(addSuccess.ToString()));
         }
 
         [HttpPost("updateProduct")]
@@ -165,6 +186,27 @@ namespace KShop.Controllers
             return JsonConvert.SerializeObject(addSuccess.ToString());
         }
 
+        int GetLastProductId() {
+            int result = -1;
+            try {
+                connection.Open();
+
+                #region
+                SqlCommand command = new SqlCommand("sp_getLastID_Product", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                SqlDataReader reader = command.ExecuteReader();
+                if(reader.Read()) {
+                    result = reader.GetInt32("ProductId");
+                }
+                #endregion
+
+                connection.Close();
+            } catch(Exception) {
+                throw;
+            }
+            return result;
+        }
 
     }
 }

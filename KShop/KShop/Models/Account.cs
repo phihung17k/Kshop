@@ -4,34 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace KShop.Models {
-    public class Account {
-        string username;
-        string password;
+    public class Account{
         string fullname;
         string address;
         int age;
         string gender;
-        string roleId;
+        string role;
 
         public Account() {
         }
 
-        public Account(string username, string password, string fullname, string address, int age, string gender, string roleId) {
-            this.Username = username;
-            this.Password = password;
-            this.Fullname = fullname;
-            this.Address = address;
-            this.Age = age;
-            this.Gender = gender;
-            this.RoleId = roleId;
+        public Account(string fullname, string address, int age, string gender, string role) {
+            this.fullname = fullname;
+            this.address = address;
+            this.age = age;
+            this.gender = gender;
+            this.role = role;
         }
 
-        public string Username { get => username; set => username = value; }
-        public string Password { get => password; set => password = value; }
         public string Fullname { get => fullname; set => fullname = value; }
         public string Address { get => address; set => address = value; }
         public int Age { get => age; set => age = value; }
         public string Gender { get => gender; set => gender = value; }
-        public string RoleId { get => roleId; set => roleId = value; }
+        public string Role { get => role; set => role = value; }
     }
 }
