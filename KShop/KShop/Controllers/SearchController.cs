@@ -5,8 +5,8 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using test.Models;
 using System.Collections;
+using KShop.Models;
 
 namespace KShop.Controllers
 {

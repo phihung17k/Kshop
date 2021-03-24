@@ -1,13 +1,13 @@
 ﻿using KShop.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using Newtonsoft.Json;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+
 
 namespace KShop.Controllers
 {
@@ -97,29 +97,15 @@ namespace KShop.Controllers
             return listProduct;
         }
 
-        private Object ByteArrayToObject(byte[] arrBytes) {
-            MemoryStream memStream = new MemoryStream();
-            BinaryFormatter binForm = new BinaryFormatter();
-            memStream.Write(arrBytes, 0, arrBytes.Length);
-            memStream.Seek(0, SeekOrigin.Begin);
-            Object obj = (Object)binForm.Deserialize(memStream);
-
-            return obj;
-        }
 
         [HttpGet("addProduct")]
+        
         public ActionResult AddProduct() {
             bool addSuccess = false;
             try {
-                byte[] form = new byte[10];
-                HttpContext.Session.TryGetValue("formData", out form);
-                FormCreateProduct formData = (FormCreateProduct)ByteArrayToObject(form);
-                string a = formData.ProductName;
-                string b = formData.Quantity;
-                string c = formData.Price;
-                string d = formData.ProductName;
+                string serialize = HttpContext.Session.GetString("tempForm");
+                TempForm tempForm = System.Text.Json.JsonSerializer.Deserialize<TempForm>(serialize); 
 
-                string imageLocation = Request.Headers["imageLocation"];
                 connection.Open();
 
                 #region
@@ -131,12 +117,12 @@ namespace KShop.Controllers
                 command.Parameters.Add("@categoryId", SqlDbType.NVarChar);
                 command.Parameters.Add("@image", SqlDbType.NVarChar);
 
-                command.Parameters["@productName"].Value = formData.ProductName;
-                command.Parameters["@quantity"].Value = formData.Quantity;
-                command.Parameters["@price"].Value = formData.Price;
-                command.Parameters["@categoryId"].Value = formData.CategoryId;
-                command.Parameters["@image"].Value = imageLocation;
-
+                command.Parameters["@productName"].Value = tempForm.ProductName;
+                command.Parameters["@quantity"].Value = tempForm.Quantity;
+                command.Parameters["@price"].Value = tempForm.Price;
+                command.Parameters["@categoryId"].Value = tempForm.CategoryId;
+                command.Parameters["@image"].Value = tempForm.ImageLocation;
+                
                 int row = command.ExecuteNonQuery();
                 if(row > 0) {
                     addSuccess = true;
@@ -151,9 +137,12 @@ namespace KShop.Controllers
         }
 
         [HttpPost("updateProduct")]
-        public string UpdateProduct([FromBody] Product product) {
+        public string UpdateProduct() {
             bool addSuccess = false;
             try {
+                string serialize = HttpContext.Session.GetString("tempForm");
+                TempForm tempForm = System.Text.Json.JsonSerializer.Deserialize<TempForm>(serialize);
+
                 connection.Open();
 
                 #region
@@ -164,14 +153,17 @@ namespace KShop.Controllers
                 command.Parameters.Add("@quantity", SqlDbType.Int);
                 command.Parameters.Add("@price", SqlDbType.Float);
                 command.Parameters.Add("@categoryId", SqlDbType.NVarChar);
-                command.Parameters.Add("@image", SqlDbType.NVarChar);
+                if(tempForm.ImageLocation != null) {
+                    command.Parameters.Add("@image", SqlDbType.NVarChar);
+                    command.Parameters["@image"].Value = tempForm.ImageLocation;
+                }
 
-                command.Parameters["@productId"].Value = product.ProductId;
-                command.Parameters["@productName"].Value = product.ProductName;
-                command.Parameters["@quantity"].Value = product.Quantity;
-                command.Parameters["@price"].Value = product.Price;
-                command.Parameters["@categoryId"].Value = product.CategoryId;
-                command.Parameters["@image"].Value = product.Image;
+                command.Parameters["@productId"].Value = tempForm.ProductId;
+                command.Parameters["@productName"].Value = tempForm.ProductName;
+                command.Parameters["@quantity"].Value = tempForm.Quantity;
+                command.Parameters["@price"].Value = tempForm.Price;
+                command.Parameters["@categoryId"].Value = tempForm.CategoryId;
+                
 
                 int row = command.ExecuteNonQuery();
                 if(row > 0) {

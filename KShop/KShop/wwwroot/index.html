@@ -15,24 +15,28 @@
         </div>
     </header>
     <div id="body">
-        <form name="form1" method="post" action="api/addNewProduct" enctype="multipart/form-data">
+        <form name="form1" method="post" action="api/uploadImageProduct" enctype="multipart/form-data">
             <div>
+                <label>
+                    productId
+                </label>
+                <input name="productId" type="text" value="" /><br />
                 <label>
                     productName
                 </label>
-                <input name="productName" type="text" value="" />
+                <input name="productName" type="text" value="" /><br />
                 <label>
                     quantity
                 </label>
-                <input name="quantity" type="text" value="" />
+                <input name="quantity" type="text" value="" /><br />
                 <label>
                     price
                 </label>
-                <input name="price" type="text" value="" />
+                <input name="price" type="text" value="" /><br />
                 <label>
                     categoryId
                 </label>
-                <input name="categoryId" type="text" value="" />
+                <input name="categoryId" type="text" value="" /><br />
             </div>
             <div>
                 <label>
@@ -41,7 +45,8 @@
                 <input name="file" type="file" accept="image/*" />
             </div>
             <div>
-                <input type="submit" value="Upload" />
+                <input type="submit" value="Create" name="button" />
+                <input type="submit" value="Update" name="button" />
             </div>
      </form>
         </div>

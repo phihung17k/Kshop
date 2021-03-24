@@ -43,7 +43,7 @@ namespace KShop {
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseSession();
 
             app.UseRouting();
@@ -52,7 +52,12 @@ namespace KShop {
                 endpoints.MapControllers();
             });
             app.UseStaticFiles();
-
+            Type[] extraAllowedTypes = new Type[]
+            {
+                typeof(Models.TempForm)
+            };
+            
+            AppDomain.CurrentDomain.SetData("System.Data.DataSetDefaultAllowedTypes", extraAllowedTypes);
         }
     }
 }

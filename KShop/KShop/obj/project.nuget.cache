@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2L1JLdDGUuF73loLlC7KXF/Xvkof6M3YlEuJGdyk80QBG2ai4YjsoULhuYZj7p7KJhErrNfCMLm64fsWig0f/Q==",
+  "dgSpecHash": "rvr7QDufKJJYWtYSVyu/sEi1gQRW0utz+tXKg6ortN1BT1D7ecgYphYxFUPz2w9o4TuBotIbPjLUp+ioWeCrWg==",
   "success": true,
   "projectFilePath": "D:\\OneDrive\\Desktop\\Project\\KshopCode\\KShop\\KShop\\KShop.csproj",
   "expectedPackageFiles": [
@@ -127,6 +127,7 @@
     "C:\\Users\\Win 10\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\Win 10\\.nuget\\packages\\system.text.json\\5.0.1\\system.text.json.5.0.1.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\Win 10\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
